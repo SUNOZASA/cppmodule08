@@ -25,13 +25,13 @@ Span::~Span() {}
 
 void	Span::addNumber(const int & num) {
 	if (v.size() == N)
-		throw std::runtime_error("Full");
+		throw std::runtime_error("capacity is full");
 	v.push_back(num);
 }
 
 void	Span::addNumber(std::vector<int> & v_) {
 	if (v.size() + v_.size() > N)
-		throw std::runtime_error("Full");
+		throw std::runtime_error("capacity is full");
 	v.insert(v.end(), v_.begin(), v_.end());
 }
 
@@ -40,14 +40,13 @@ unsigned int	Span::shortestSpan() {
 	unsigned int	sp;
 
 	if (v.size() <= 1)
-		throw std::runtime_error("Size <= 1");
-	std::vector<int>::iterator i = v.begin();
-	i++;
-	for (; i != v.end(); i++) {
-		if (*i >= *(i - 1))
-			sp = *i - *(i - 1);
-		else
-			sp = *(i - 1) - *i;
+		throw std::runtime_error("two or more elements are required");
+	std::vector<int> sorted = v;
+	std::sort(sorted.begin(), sorted.end());
+	std::vector<int>::iterator it = sorted.begin();
+	it++;
+	for (; it != sorted.end(); ++it) {
+		sp = *it - *(it - 1);
 		if (sp <= spMin)
 			spMin = sp;
 	}
@@ -55,20 +54,7 @@ unsigned int	Span::shortestSpan() {
 }
 
 unsigned int	Span::longestSpan() {
-	unsigned int	spMax = 0;
-	unsigned int	sp;
-
 	if (v.size() <= 1)
-		throw std::runtime_error("Size <= 1");
-	std::vector<int>::iterator i = v.begin();
-	i++;
-	for (; i != v.end(); i++) {
-		if (*i >= *(i - 1))
-			sp = *i - *(i - 1);
-		else
-			sp = *(i - 1) - *i;
-		if (sp >= spMax)
-			spMax = sp;
-	}
-	return spMax;
+		throw std::runtime_error("two or more elements are required");
+	return *(std::max_element(v.begin(), v.end())) - *(std::min_element(v.begin(), v.end()));
 }

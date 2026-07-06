@@ -17,17 +17,23 @@ int	main() {
 	d.push_front(2);
 	d.push_back(3);
 	d.push_front(4);
-	int	num_not_found = 10;
+	int	v_find = 3;
+	int	d_find = 3;
 
-	std::vector<int>::iterator vit = easyfind(v, 3);
-	std::cout << "found " << *vit << std::endl;
+	std::cout << "=====vector test=====" << std::endl;
+	std::vector<int>::iterator vit;
 	try {
-		vit = easyfind(v, num_not_found);
-		std::cout << "found " << *vit << std::endl;
-	} catch(const std::exception & e) {
-		std::cerr << num_not_found << " " << e.what() << std::endl;
+		vit = easyfind(v, v_find);
+		std::cout << "found" << *vit << std::endl;
+	} catch (const std::exception & e) {
+		std::cout << e.what() << std::endl;
 	}
-	std::cout << std::endl;
-	std::deque<int>::iterator dit = easyfind(d, 2);
-	std::cout << "found " << *dit << std::endl;
+	std::cout << "=====deque  test=====" << std::endl;
+	std::deque<int>::iterator dit;
+	try {
+		dit = easyfind(d, d_find);
+		std::cout << "found" << *dit << std::endl;
+	} catch (const std::exception & e) {
+		std::cout << e.what() << std::endl;
+	}
 }
